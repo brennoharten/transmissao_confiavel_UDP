@@ -12,8 +12,15 @@ client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sockDoor = 0
 client.bind(('',sockDoor))
 originDoor = client.getsockname()[1]
-
+client.connect((HOST,door))
 file = open(sys.argv[1],'r')
+filename = sys.argv[1]
+
+#envio do cabecalho para criacao do arquivo
+filesize = os.path.getsize(filename)
+client.send(filename.encode())
+client.send(f"{filesize}".encode())
+
 vector = file.read().splitlines()
 
 while len(vector)>1:
@@ -111,7 +118,7 @@ while len(vector)>1:
         seq=1
 
     #Encerrando client
-    if option==5:
+    if option==4:
         sys.exit()
 
 

@@ -14,10 +14,20 @@ i=0
 server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 server.bind((host,port))
 
+filename, addr = server.recvfrom(1024)
+filesize, addr = server.recvfrom(1024)
+filename = os.path.basename(filename)
+filesize = int(filesize)
+
 oncethru=0
 
 while 1:
 	
+	with open(filename, 'wb',filesize) as f:
+		for rc in recivedDataOrder:
+			str_val = str(rc) 
+			byte_val = str_val.encode() 
+			f.write(byte_val)
 	#Estado 0
 
 	d = server.recvfrom(pack_size)
@@ -78,13 +88,11 @@ while 1:
 
 	if (seq==0 and sum==checksum):
 		recivedData.append(data)
-		recivedDataOrder.append(data)
+		recivedDataOrder.append(str(data) + "\n")
 		recivedDataOrder.sort()
 		print("\nPacote ["+str(data)+"] recebido corretamente!")
 		print("\nPacotes recebidos até o momento:")
 		print(recivedData)
-		print("\nPacotes recebidos (em Order):")
-		print(recivedDataOrder)
 		print("\nPacotes duplicados:")
 		print(duplicatedDatas)
 		print("\nPacotes corrompidos:")
@@ -161,13 +169,11 @@ while 1:
 
 	if (seq==1 and sum==checksum):
 		recivedData.append(data)
-		recivedDataOrder.append(data)
+		recivedDataOrder.append(str(data) + "\n")
 		recivedDataOrder.sort()
 		print("\nPacote ["+str(data)+"] recebido corretamente!")
 		print("\nPacotes recebidos até o momento:")
 		print(recivedData)
-		print("\nPacotes recebidos (em Order):")
-		print(recivedDataOrder)
 		print("\nPacotes duplicados:")
 		print(duplicatedDatas)
 		print("\nPacotes corrompidos:")

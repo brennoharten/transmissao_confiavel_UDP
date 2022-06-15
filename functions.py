@@ -1,16 +1,14 @@
-import socket
-import sys
 import os
 
 def menu(vetor):
 	os.system('clear')
 	print("\n----------------------------------------------")
-	print("Lista de pacotes a serem enviados: ")
+	print("pacotes para enviar: ")
 	print(vetor[0:len(vetor)-1])
 	print("\nOpções:")
-	print("\n1 - Enviar próximo pacote")
-	print("2 - Corromper envio do próximo pacote")
-	print("3 - Duplicar envio do próximo pacote")
+	print("\n1 - Enviar pacote")
+	print("2 - Corromper pacote")
+	print("3 - Duplicar pacote")
 	print("4 - Sair\n")
 	option = 0
 	while (option<1 or option>5):
@@ -34,14 +32,6 @@ def checksum(originDoor,endDoor,size):
 	return int(checksum,2)
 
 def creat_pack_client(originDoor,endDoor,size,sum,seq,dado):
-	print(originDoor)
-	print(endDoor)
-	print(size)
-	print(sum)
-	print(seq)
-	print(dado)
-	print("\n")
-
 	pack = bin(originDoor)[2:].zfill(16)+bin(endDoor)[2:].zfill(16)+bin(size)[2:].zfill(16)+bin(sum)[2:].zfill(16)+bin(seq)[2:].zfill(1)+bin(dado)[2:].zfill(32)
 	return pack
 

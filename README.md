@@ -22,6 +22,6 @@ Excute o programa na sequência, respectivamente:
 
 ```bash
   python servidor.py
-  python cliente.py
+  python cliente.py ./arquivo-enviar/entrada.txt
 ```
     
